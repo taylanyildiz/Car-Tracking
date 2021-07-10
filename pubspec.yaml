@@ -1,0 +1,39 @@
+name: ake_car_tracker
+description: A new Flutter project.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+  # for icons
+  font_awesome_flutter: ^9.1.0
+  # state management
+  get: ^4.1.4
+  # location 
+  location: ^4.3.0
+  # google map
+  google_maps_flutter: ^2.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+     - assets/images/
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
