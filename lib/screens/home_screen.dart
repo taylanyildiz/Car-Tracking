@@ -5,21 +5,27 @@ import '/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends GetView<HomeScreenController> {
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeScreenController>(
-      builder: (_) => Scaffold(
-        body: Background(
-          child: Stack(
-            children: [
-              _buildSearchButton(),
-              _buildHeaderText(),
-              _buildLeftSideCarImage(),
-              _buildInfoCardList(),
-              _buildLockButton(),
-            ],
+      builder: (_) => GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Background(
+            child: Stack(
+              children: [
+                _buildSearchButton(),
+                _buildHeaderText(),
+                _buildLeftSideCarImage(),
+                _buildInfoCardList(),
+                _buildLockButton(),
+              ],
+            ),
           ),
         ),
       ),

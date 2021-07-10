@@ -43,6 +43,7 @@ class HomeScreenController extends GetxController {
   void onCardInfo(int index) {
     switch (index) {
       case 0:
+        Get.toNamed(PageRouters.MAP);
         break;
       case 1:
         Get.toNamed(PageRouters.CAR_DETAIL);

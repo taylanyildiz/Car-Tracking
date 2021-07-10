@@ -3,4 +3,5 @@ class PageRouters {
 
   static const String HOME = '/HomeScreen';
   static const String CAR_DETAIL = '/CarDetailScreen';
+  static const String MAP = '/MapScreen';
 }

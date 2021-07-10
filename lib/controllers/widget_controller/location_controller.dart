@@ -8,17 +8,19 @@ class LocationController extends GetxController {
   LocationData? currentLocation;
 
   @override
-  void onInit() {
-    getLocation();
+  void onInit() async {
+    await getLocation();
     super.onInit();
   }
 
   Future<LocationData?>? getLocation() async {
     isServiceEnable = await location.serviceEnabled();
-    if (!isServiceEnable)
+    if (!isServiceEnable) {
       isServiceEnable = await location.requestService();
-    else
-      return null;
+      if (!isServiceEnable) {
+        return null;
+      }
+    }
 
     isPermissionGrant = await location.hasPermission();
     if (isPermissionGrant == PermissionStatus.denied) {

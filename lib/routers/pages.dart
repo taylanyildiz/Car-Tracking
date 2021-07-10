@@ -17,5 +17,10 @@ class Pages {
       page: () => CarDetailScreen(),
       binding: CarDetailBinding(),
     ),
+    GetPage(
+      name: PageRouters.MAP,
+      page: () => MapScreen(),
+      binding: MappBinding(),
+    ),
   ];
 }

@@ -74,7 +74,6 @@ class _InputSearchState extends State<InputSearch>
           controller: widget.searchController.searchController,
           onChanged: widget.onChanged,
           onSaved: widget.onSaved,
-          autofocus: true,
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
             filled: true,
