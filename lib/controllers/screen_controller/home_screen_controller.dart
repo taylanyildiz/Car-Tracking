@@ -13,7 +13,10 @@ class HomeScreenController extends GetxController {
   ConcavAnimController concavAnimController = ConcavAnimController();
 
   /// Click search button.
-  void onSearch() {
+  void onSearch(context) {
+    if (FocusScope.of(context).canRequestFocus) {
+      FocusScope.of(context).unfocus();
+    }
     searchAnimController.search();
     concavAnimController.onAnim();
   }

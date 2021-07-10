@@ -19,7 +19,7 @@ class HomeScreen extends GetView<HomeScreenController> {
           body: Background(
             child: Stack(
               children: [
-                _buildSearchButton(),
+                _buildSearchButton(context),
                 _buildHeaderText(),
                 _buildLeftSideCarImage(),
                 _buildInfoCardList(),
@@ -32,7 +32,7 @@ class HomeScreen extends GetView<HomeScreenController> {
     );
   }
 
-  _buildSearchButton() {
+  _buildSearchButton(BuildContext context) {
     return Positioned(
       top: Get.height * .055,
       right: Get.width * .05,
@@ -48,7 +48,7 @@ class HomeScreen extends GetView<HomeScreenController> {
             hint: TranslateHelper.search,
           ),
           CircleConcavButton(
-            onPressed: () => controller.onSearch(),
+            onPressed: () => controller.onSearch(context),
             child: Icon(Icons.search, color: Colors.grey),
             animController: controller.concavAnimController,
             animChild: Icon(Icons.close, color: Colors.grey),

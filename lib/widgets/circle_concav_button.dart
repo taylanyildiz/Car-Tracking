@@ -40,13 +40,13 @@ class _CircleConcavButtonState extends State<CircleConcavButton>
     );
     _currentAnim = CurvedAnimation(
       parent: _controller,
-      curve: Interval(.0, .3, curve: Curves.linear),
+      curve: Interval(.0, .5, curve: Curves.linear),
     )..addListener(() {
         setState(() {});
       });
     _otherAnim = CurvedAnimation(
       parent: _controller,
-      curve: Interval(.3, 1.0, curve: Curves.linear),
+      curve: Interval(.45, 1.0, curve: Curves.linear),
     )..addListener(() {
         setState(() {});
       });

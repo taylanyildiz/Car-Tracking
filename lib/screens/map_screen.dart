@@ -28,6 +28,7 @@ class MapScreen extends GetView<MapScreenController> {
       initialCameraPosition: controller.cameraCurrentUserPosition(),
       myLocationEnabled: true,
       myLocationButtonEnabled: false,
+      rotateGesturesEnabled: false,
       onMapCreated: (googleMapController) {
         controller.googleMapController = googleMapController;
         controller.changeMapStyle();
@@ -78,7 +79,18 @@ class MapScreen extends GetView<MapScreenController> {
       minHeight: 100.0,
       maxHeight: 200.0,
       header: Row(
-        children: [],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Google Maps',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [],

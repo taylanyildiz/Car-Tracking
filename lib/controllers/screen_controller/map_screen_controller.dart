@@ -20,7 +20,7 @@ class MapScreenController extends GetxController {
   late GoogleMapController googleMapController;
 
   /// Current user location
-  CameraPosition cameraCurrentUserPosition() {
+  cameraCurrentUserPosition() {
     return CameraPosition(
       target: LatLng(
         locationController.currentLocation!.latitude!,
@@ -57,13 +57,16 @@ class MapScreenController extends GetxController {
     googleMapController.setMapStyle(mapStyle);
   }
 
+  Future<void> onClickCarPin() async {}
+
   /// Click menu button
   void onMenu() {
     menuAnimController.onAnim();
   }
 
   /// Click gps button
-  void onGpsFixed() {
+  void onGpsFixed() async {
+    await currentLocationAnimateCamera();
     gpsFixedController.onAnim();
   }
 }
