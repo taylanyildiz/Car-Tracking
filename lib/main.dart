@@ -1,12 +1,14 @@
-import 'package:ake_car_tracker/bindings/home_binding.dart';
-import 'package:ake_car_tracker/localization/localization.dart';
-
+import '/bindings/home_binding.dart';
+import '/localization/localization.dart';
 import '/routers/pages.dart';
 import '/routers/page_routers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'controllers/controller.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put(LocationController());
   runApp(App());
 }
 
