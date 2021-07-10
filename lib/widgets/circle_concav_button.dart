@@ -10,6 +10,7 @@ class CircleConcavButton extends StatefulWidget {
     this.color,
     this.animController,
     this.animChild,
+    this.autoReverse = false,
   }) : super(key: key);
 
   final Widget child;
@@ -17,6 +18,7 @@ class CircleConcavButton extends StatefulWidget {
   final Color? color;
   final ConcavAnimController? animController;
   final Widget? animChild;
+  final bool? autoReverse;
 
   @override
   _CircleConcavButtonState createState() => _CircleConcavButtonState();
@@ -49,14 +51,19 @@ class _CircleConcavButtonState extends State<CircleConcavButton>
         setState(() {});
       });
     if (widget.animController != null) {
-      widget.animController!._addListener(() {
+      widget.animController!._addListener(() async {
         _onClick1 = !_onClick1;
-        if (_onClick1) {
-          _controller.forward();
+        if (!widget.autoReverse!) {
+          if (_onClick1) {
+            _controller.forward();
+          } else {
+            _controller.reverse();
+          }
         } else {
-          _controller.reverse();
+          await _controller.forward();
+          await _controller.reverse();
         }
-      });
+      }, () => _controller.reverse());
     }
     super.initState();
   }
@@ -118,8 +125,8 @@ class _CircleConcavButtonState extends State<CircleConcavButton>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color(0xff282d31),
-                Color(0xff212429),
+                widget.color?.withOpacity(.6) ?? Color(0xff282d31),
+                widget.color ?? Color(0xff212429),
               ],
               stops: [0.3, .7],
             ),
@@ -200,7 +207,7 @@ class _CircleConcavButtonState extends State<CircleConcavButton>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color(0xff282d31),
+                  widget.color?.withOpacity(.6) ?? Color(0xff282d31),
                   Color(0xff212429),
                 ],
                 stops: [0.3, .7],
@@ -216,10 +223,14 @@ class ConcavAnimController {
   ConcavAnimController();
 
   late Function() _onAnim;
+  late Function() _onReverse;
 
-  _addListener(Function() onAnim) {
+  _addListener(Function() onAnim, Function() onReverse) {
     this._onAnim = onAnim;
+    this._onReverse = onReverse;
   }
 
   void onAnim() => _onAnim();
+
+  void onReverse() => _onReverse();
 }
