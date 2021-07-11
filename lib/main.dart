@@ -1,3 +1,5 @@
+import 'package:ake_car_tracker/services/service.dart';
+
 import '/bindings/home_binding.dart';
 import '/localization/localization.dart';
 import '/routers/pages.dart';
@@ -9,6 +11,7 @@ import 'controllers/controller.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(LocationController());
+  Get.put(RestfulService());
   runApp(App());
 }
 
