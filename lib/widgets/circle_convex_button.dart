@@ -21,16 +21,27 @@ class CircleConvexButton extends StatefulWidget {
 class _CircleConvexButtonState extends State<CircleConvexButton> {
   bool _onClick = false;
 
+  _onTapUp(detail) {
+    setState(() => _onClick = false);
+    widget.onPressed.call();
+  }
+
+  _onTapDown(detail) {
+    setState(() => _onClick = true);
+  }
+
+  _onTap() async {
+    setState(() => _onClick = true);
+    await Future.delayed(Duration(milliseconds: 100));
+    setState(() => _onClick = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapUp: (detail) {
-        setState(() => _onClick = false);
-        widget.onPressed.call();
-      },
-      onTapDown: (detail) {
-        setState(() => _onClick = true);
-      },
+      onTapUp: _onTapUp,
+      onTapDown: _onTapDown,
+      onTap: _onTap,
       onTapCancel: () => setState(() => _onClick = false),
       child: Stack(
         children: [
@@ -75,8 +86,8 @@ class _CircleConvexButtonState extends State<CircleConvexButton> {
                       begin: FractionalOffset(0.35, 0.0),
                       end: Alignment.bottomRight,
                       colors: [
-                        _onClick ? Colors.black38 : Colors.black54,
-                        widget.color?.withOpacity(.3) ?? Colors.white,
+                        _onClick ? Colors.black45 : Colors.black38,
+                        widget.color?.withOpacity(.2) ?? Colors.white,
                         widget.color ?? Colors.white,
                       ],
                       stops: [.0, .5, 1.0],
@@ -91,4 +102,17 @@ class _CircleConvexButtonState extends State<CircleConvexButton> {
       ),
     );
   }
+}
+
+class CircleConvexAnimController {
+  CircleConvexAnimController();
+  late Function() _onStart;
+  late Function() _onReverse;
+  _addListener(Function() onStart(), Function() onReverse) {
+    this._onStart = onStart;
+    this._onReverse = onReverse;
+  }
+
+  void onStart() => _onStart();
+  void onReverse() => _onReverse();
 }

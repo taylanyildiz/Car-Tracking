@@ -7,6 +7,7 @@ class CircleConcavButton extends StatefulWidget {
     Key? key,
     required this.onPressed,
     required this.child,
+    this.duration = const Duration(seconds: 1),
     this.color,
     this.animController,
     this.animChild,
@@ -19,6 +20,7 @@ class CircleConcavButton extends StatefulWidget {
   final ConcavAnimController? animController;
   final Widget? animChild;
   final bool? autoReverse;
+  final Duration duration;
 
   @override
   _CircleConcavButtonState createState() => _CircleConcavButtonState();
@@ -36,7 +38,7 @@ class _CircleConcavButtonState extends State<CircleConcavButton>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: widget.duration,
     );
     _currentAnim = CurvedAnimation(
       parent: _controller,

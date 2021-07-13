@@ -1,48 +1,19 @@
-import 'dart:developer';
+import 'package:ake_car_tracker/constants/resful_constant.dart';
+import 'package:ake_car_tracker/models/car.dart';
 import 'package:get/get_connect.dart';
 
 class RestfulService extends GetConnect {
   @override
   void onInit() async {
-    httpClient.baseUrl = 'http://213.238.180.11:3350/api/v1';
-    await getAdress();
+    httpClient.baseUrl = ResftulConstant.BASE_URL;
     super.onInit();
   }
 
-  Future getAdress() async {
-    String url = '/adress/get-all-adress';
+  Future getCars() async {
+    String url = ResftulConstant.CAR_ROUTER + ResftulConstant.CAR_IMEIS;
     Response response = await get(url);
-    log(response.body.toString());
-    List e = response.body.map((e) => Adress.fromJson(e)).toList();
-    print('');
-    for (Adress a in e) {
-      print(a.adress_city);
+    if (response.statusCode == 200) {
+      return response.body['cars'].map((e) => Car.fromJson(e)).toList();
     }
-  }
-}
-
-class Adress {
-  Adress({
-    required this.adress_id,
-    required this.adress_country,
-    required this.adress_state,
-    required this.adress_city,
-    required this.adress_street,
-  });
-
-  int? adress_id;
-  String? adress_country;
-  String? adress_state;
-  String? adress_city;
-  String? adress_street;
-
-  factory Adress.fromJson(Map<String, dynamic> json) {
-    return Adress(
-      adress_id: json['adress_id'],
-      adress_country: json['adress_country'],
-      adress_state: json['adress_state'],
-      adress_city: json['adress_city'],
-      adress_street: json['adress_street'],
-    );
   }
 }

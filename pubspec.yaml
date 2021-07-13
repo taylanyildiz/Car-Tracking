@@ -21,6 +21,11 @@ dependencies:
   location: ^4.3.0
   # google map
   google_maps_flutter: ^2.0.6
+  # mqtt-client
+  mqtt_client: ^9.3.2
+  # uid mqtt
+  uuid: ^3.0.4
+
 
 dev_dependencies:
   flutter_test:

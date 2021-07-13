@@ -31,6 +31,7 @@ class MapScreen extends GetView<MapScreenController> {
       rotateGesturesEnabled: false,
       onMapCreated: (googleMapController) {
         controller.googleMapController = googleMapController;
+        controller.getLocation();
         controller.changeMapStyle();
       },
     );
@@ -45,6 +46,16 @@ class MapScreen extends GetView<MapScreenController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CircleConcavButton(
+            onPressed: () => Get.back(),
+            child: Padding(
+              padding: EdgeInsets.only(left: 3.0),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          CircleConcavButton(
             onPressed: controller.onMenu,
             child: Icon(
               Icons.menu,
@@ -56,19 +67,6 @@ class MapScreen extends GetView<MapScreenController> {
             ),
             animController: controller.menuAnimController,
           ),
-          CircleConcavButton(
-            autoReverse: true,
-            onPressed: controller.onGpsFixed,
-            child: Icon(
-              Icons.gps_fixed,
-              color: Colors.white,
-            ),
-            animChild: Icon(
-              Icons.gps_fixed,
-              color: Colors.blue,
-            ),
-            animController: controller.gpsFixedController,
-          )
         ],
       ),
     );
@@ -78,19 +76,34 @@ class MapScreen extends GetView<MapScreenController> {
     return CustomBottomSheet(
       minHeight: 100.0,
       maxHeight: 200.0,
-      header: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Google Maps',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.0,
-              fontWeight: FontWeight.bold,
+      header: Container(
+        width: Get.width,
+        height: 50.0,
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            Text(
+              'Google Maps',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+            Positioned(
+              right: 0.0,
+              child: CircleConvexButton(
+                onPressed: controller.onGpsFixed,
+                color: Colors.white,
+                padding: 20.0,
+                child: Icon(
+                  Icons.gps_fixed,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [],

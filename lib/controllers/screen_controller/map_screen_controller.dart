@@ -1,20 +1,33 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-import '/widgets/widget.dart';
+import 'package:ake_car_tracker/models/car.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import '/services/service.dart';
+import 'package:flutter/material.dart';
+import '/widgets/widget.dart';
 import '/controllers/controller.dart';
 import 'package:get/get.dart';
 
 class MapScreenController extends GetxController {
+  @override
+  void onInit() {
+    getCarImeiList();
+    super.onInit();
+  }
+
+  /// Car List from Restful service
+  List cars = [];
+
   /// App bar button menu animation controller.
   ConcavAnimController menuAnimController = ConcavAnimController();
 
-  /// App bar button gps fixed animation controler.
-  ConcavAnimController gpsFixedController = ConcavAnimController();
-
   /// Location controller object
   final locationController = Get.find<LocationController>();
+
+  /// RestfulService object.
+  final restfulService = Get.find<RestfulService>();
+
+  final mqttService = Get.find<MqttService>();
 
   /// Google map controller
   late GoogleMapController googleMapController;
@@ -22,11 +35,13 @@ class MapScreenController extends GetxController {
   /// Current user location
   cameraCurrentUserPosition() {
     return CameraPosition(
-      target: LatLng(
-        locationController.currentLocation!.latitude!,
-        locationController.currentLocation!.longitude!,
-      ),
-      zoom: 10.0,
+      target: locationController.currentLocation != null
+          ? LatLng(
+              locationController.currentLocation!.latitude!,
+              locationController.currentLocation!.longitude!,
+            )
+          : LatLng(38.7574212, 26.1707787),
+      zoom: 11.5,
     );
   }
 
@@ -57,7 +72,16 @@ class MapScreenController extends GetxController {
     googleMapController.setMapStyle(mapStyle);
   }
 
-  Future<void> onClickCarPin() async {}
+  /// Parse receive message form mqtt. [imei/data]
+  void parseMqttDataSensor(imei, message) {
+    List result = jsonDecode(message);
+    int carIndex = cars.indexWhere((element) => element.imei == imei);
+    if (carIndex != -1) {
+      result.forEach((element) {
+        print(element);
+      });
+    }
+  }
 
   /// Click menu button
   void onMenu() {
@@ -67,6 +91,12 @@ class MapScreenController extends GetxController {
   /// Click gps button
   void onGpsFixed() async {
     await currentLocationAnimateCamera();
-    gpsFixedController.onAnim();
+  }
+
+  void getCarImeiList() async {
+    cars = (await restfulService.getCars()) ?? [];
+    for (Car c in cars) {
+      mqttService.subscribeAllTopic(c.imei.toString());
+    }
   }
 }

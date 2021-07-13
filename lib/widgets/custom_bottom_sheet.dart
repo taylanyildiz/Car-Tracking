@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:ake_car_tracker/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomSheet extends StatefulWidget {
@@ -128,7 +126,13 @@ class _CustomBottomSheetState extends State<CustomBottomSheet>
                   height: 3.0,
                   color: Colors.black,
                 ),
-                Container(height: widget.minHeight, child: widget.header),
+                Container(
+                  height: widget.minHeight,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: widget.header,
+                  ),
+                ),
                 SizedBox(height: 10.0),
                 Expanded(child: widget.body),
               ],

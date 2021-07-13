@@ -13,7 +13,7 @@ class LocationController extends GetxController {
     super.onInit();
   }
 
-  Future<LocationData?>? getLocation() async {
+  Future<LocationData?> getLocation() async {
     isServiceEnable = await location.serviceEnabled();
     if (!isServiceEnable) {
       isServiceEnable = await location.requestService();
